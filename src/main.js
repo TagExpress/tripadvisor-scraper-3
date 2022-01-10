@@ -12,6 +12,8 @@ Apify.main(async () => {
     process.env.DEV_MODE = process.env.DEV_MODE === 'true'
 
     if (process.env.DEV_MODE) {
+        log.info('development mode')
+
         if (fs.existsSync(process.env.APIFY_LOCAL_STORAGE_DIR)) {
             fs.rmdirSync(process.env.APIFY_LOCAL_STORAGE_DIR, {recursive: true, force: true})
         }
@@ -20,6 +22,8 @@ Apify.main(async () => {
             firstReviewOnly: false,
             url: 'https://www.tripadvisor.com.br/Hotel_Review-g303506-d536032-Reviews-Hotel_Mar_Palace_Copacabana-Rio_de_Janeiro_State_of_Rio_de_Janeiro.html'
         })
+    } else {
+        log.info('production mode')
     }
 
     const input = await Apify.getValue('INPUT')
@@ -28,15 +32,15 @@ Apify.main(async () => {
 
     globalThis.SITE_URL = new URL(input.url)
     
-    const requestList = await Apify.openRequestList('default', [{
+    const requestList = await Apify.openRequestList('queue',[{
         url: input.url,
         userData: {
             initializeHotel: true
         }
     }])
 
-    const requestQueue = await Apify.openRequestQueue('default')
-    const dataset = await Apify.openDataset('default')
+    const requestQueue = await Apify.openRequestQueue()
+    const dataset = await Apify.openDataset()
 
     const config = selectors.config
     const configReviews = config.selector.config.reviews.selector
