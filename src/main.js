@@ -56,7 +56,7 @@ Apify.main(async () => {
 
             const url = new URL(nextReviewElement.getAttribute('href'), input.url)
 
-            requestQueue.addRequest({
+            await requestQueue.addRequest({
                 url: url.href,
                 userData: {
                     loadReviews: true,
@@ -66,7 +66,7 @@ Apify.main(async () => {
         } else {
             log.info('loaded hotel:' + hotel.name)
 
-            dataset.pushData(hotel)
+            await dataset.pushData(hotel)
         }
     }
 
