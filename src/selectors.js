@@ -221,7 +221,7 @@ const config = {
                                         const mes = matchDate2[2]
                                         for (const m in monthByName) {
                                             if (mes.startsWith(m)) {
-                                                return (dia+'0').substring(dia.length-1) + '/' + monthByName[m] + '/' + currentYear
+                                                return ('0'+dia).substring(dia.length-1) + '/' + monthByName[m] + '/' + currentYear
                                             }
                                         }
                                     }
