@@ -9,9 +9,8 @@ const { utils } = Apify
 const { utils: { log } } = Apify
 
 Apify.main(async () => {
-    process.env.DEV_MODE = process.env.DEV_MODE === 'true'
-
-    if (process.env.DEV_MODE) {
+    
+    if (process.env.DEV_MODE === 'true') {
         log.info('development mode')
 
         if (fs.existsSync(process.env.APIFY_LOCAL_STORAGE_DIR)) {
