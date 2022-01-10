@@ -1,0 +1,21 @@
+{
+  "name": "tripadvisor-scraper-2",
+  "version": "1.0.0",
+  "description": "tripadvisor-scraper-2",
+  "main": "src/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "keywords": [
+    "tripadvisor-scraper-2"
+  ],
+  "author": "Mota",
+  "license": "ISC",
+  "dependencies": {
+    "apify": "^2.1.0",
+    "axios": "^0.24.0",
+    "canvas": "^2.8.0",
+    "jsdom": "^19.0.0"
+  }
+}
