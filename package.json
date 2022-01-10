@@ -15,7 +15,6 @@
   "dependencies": {
     "apify": "^2.1.0",
     "axios": "^0.24.0",
-    "canvas": "^2.8.0",
     "jsdom": "^19.0.0"
   }
 }
