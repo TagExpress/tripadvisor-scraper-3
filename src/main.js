@@ -18,7 +18,7 @@ Apify.main(async () => {
         }
 
         await Apify.setValue('INPUT', {
-            firstReviewOnly: false,
+            firstReviewOnly: true,
             url: 'https://www.tripadvisor.com.br/Hotel_Review-g303506-d536032-Reviews-Hotel_Mar_Palace_Copacabana-Rio_de_Janeiro_State_of_Rio_de_Janeiro.html'
         })
     } else {

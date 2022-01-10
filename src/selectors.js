@@ -187,7 +187,7 @@ const config = {
                                         const ano = matchDate[2]
                                         for (const m in monthByName) {
                                             if (mes.startsWith(m)) {
-                                                return '01/' + monthByName[m] + '/' + ano
+                                                return ano + '-' + monthByName[m] + '-01'
                                             }
                                         }
                                     }
@@ -208,7 +208,7 @@ const config = {
                                         const ano = matchDate[2]
                                         for (const m in monthByName) {
                                             if (mes.startsWith(m)) {
-                                                return '01/' + monthByName[m] + '/' + ano
+                                                return ano + '-' + monthByName[m] + '-01'
                                             }
                                         }
                                     }
@@ -221,7 +221,7 @@ const config = {
                                         const mes = matchDate2[2]
                                         for (const m in monthByName) {
                                             if (mes.startsWith(m)) {
-                                                return ('0'+dia).substring(dia.length-1) + '/' + monthByName[m] + '/' + currentYear
+                                                return currentYear + '-' + monthByName[m] + '-' + ('0'+dia).substring(dia.length-1)
                                             }
                                         }
                                     }
@@ -232,7 +232,7 @@ const config = {
                                         const day = '0'+currentDate.getDate()
                                         const month = '0'+(currentDate.getMonth()+1)
                                         const year = currentDate.getFullYear()
-                                        return day.substring(day.length-2) + '/' + month.substring(month.length-2) + '/' + year
+                                        return year + '-' + month.substring(month.length-2) + '-' + day.substring(day.length-2)
                                     }
                                 }
                                 return value
