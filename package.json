@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "apify": "^2.1.0",
-    "axios": "^0.24.0",
     "jsdom": "^19.0.0"
   }
 }
