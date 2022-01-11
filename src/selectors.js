@@ -272,7 +272,7 @@ const config = {
                                     rating: {
                                         selector: '.ui_bubble_rating',
                                         value: ratingValue,
-                                        convert: value => value ? Number(value) : null
+                                        convert: value => value ? Number(value)/10 : null
                                     },
                                     ratingLabel: {
                                         selector: 'span',
@@ -401,7 +401,7 @@ function ratingValue(element) {
         for (const className of element.classList) {
             const matchNumber = regexNumber.exec(className)
             if (matchNumber && matchNumber[1]) {
-                return matchNumber[1]
+                return (Number(matchNumber[1])/10).toString()
             }
         }
     }
