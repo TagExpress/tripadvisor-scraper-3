@@ -430,7 +430,7 @@ function ratingValue(element) {
         for (const className of element.classList) {
             const matchNumber = regexNumber.exec(className)
             if (matchNumber && matchNumber[1]) {
-                return (Number(matchNumber[1])/10).toString()
+                return (Math.trunc(Number(matchNumber[1])/10)).toString()
             }
         }
     }
