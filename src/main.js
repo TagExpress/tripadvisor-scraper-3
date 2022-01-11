@@ -65,6 +65,10 @@ Apify.main(async () => {
         } else {
             log.info('loaded hotel:' + hotel.name)
 
+            if (hotel.reviews) {
+                hotel.reviews.forEach(review => review.id = hotel.id)
+            }
+
             await dataset.pushData(hotel)
         }
     }
