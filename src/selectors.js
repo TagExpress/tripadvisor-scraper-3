@@ -238,6 +238,33 @@ const config = {
                                 return value
                             }
                         },
+                        connectionToSubjectMgmtResponse: {
+                            selector: '.fKqeL',
+                            select: (doc, selector) => doc.querySelector(selector).childNodes[0],
+                            value: element => {
+                                const value = element.textContent
+                                const regexName = /, (.+) do estabelecimento/ig
+                                const matchName = regexName.exec(value)
+                                return matchName && matchName[1] ? matchName[1] : null
+                            }
+                        },
+                        usernameMgmtResponse: {
+                            selector: '.fKqeL',
+                            select: (doc, selector) => doc.querySelector(selector).childNodes[0],
+                            value: element => {
+                                const value = element.textContent
+                                const regexName = /Resposta de (.+) ,/ig
+                                const matchName = regexName.exec(value)
+                                return matchName && matchName[1] ? matchName[1] : null
+                            }
+                        },
+                        publishedDateMgmtResponse: {
+                            selector: '.mzAim',
+                            value: element => element.getAttribute('title')
+                        },
+                        textMgmtResponse: {
+                            selector: '.eBsXT'
+                        },
                         userLocation: {
                             selector: '.ShLyt'
                         },
@@ -375,20 +402,20 @@ function selectArray(doc, selector) {
     return values
 }
 
-function select(doc, selector) {
-    return doc.querySelector(selector)
-}
-
-function value(element) {
-    return element.textContent
-}
-
 function valueArray(element) {
     return element
 }
 
 function valueObject(element) {
     return element
+}
+
+function select(doc, selector) {
+    return doc.querySelector(selector)
+}
+
+function value(element) {
+    return element.textContent
 }
 
 function convert(value) {
