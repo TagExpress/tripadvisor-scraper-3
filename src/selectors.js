@@ -240,7 +240,6 @@ const config = {
                         },
                         connectionToSubjectMgmtResponse: {
                             selector: '.fKqeL',
-                            select: (doc, selector) => doc.querySelector(selector).childNodes[0],
                             value: element => {
                                 const value = element.textContent
                                 const regexName = /, (.+) do estabelecimento/ig
@@ -250,7 +249,6 @@ const config = {
                         },
                         usernameMgmtResponse: {
                             selector: '.fKqeL',
-                            select: (doc, selector) => doc.querySelector(selector).childNodes[0],
                             value: element => {
                                 const value = element.textContent
                                 const regexName = /Resposta de (.+) ,/ig
