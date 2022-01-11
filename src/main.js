@@ -1,9 +1,15 @@
 const fs = require('fs')
 const Apify = require('apify')
-const axios = require('axios')
 const selectors = require('./selectors')
 const jsdom = require('jsdom')
 const JSDOM = jsdom.JSDOM
+const fetch = require('node-fetch')
+const { TextEncoder, TextDecoder } = require('web-encoding')
+const CssResourceLoader = require('./css-resource-loader')
+
+globalThis.fetch = fetch
+globalThis.TextEncoder = TextEncoder
+globalThis.TextDecoder = TextDecoder
 
 const { utils } = Apify
 const { utils: { log } } = Apify
@@ -136,19 +142,94 @@ async function loadPage(url) {
 
     const response = await utils.requestAsBrowser({url, languageCode: 'pt', countryCode: 'BR'})
 
+    const urlSite = new URL(url)
+    const urlReferer = urlSite.protocol + '//' + urlSite.host + '/'
+
     const dom = new JSDOM(response.body, {
-        url: url,
-        referrer: url,
+        url: urlReferer,
+        referrer: urlReferer,
         contentType: "text/html",
         includeNodeLocations: true,
         storageQuota: 10000000,
-        runScripts: 'dangerously'
+        runScripts: 'dangerously',
+        pretendToBeVisual: true,
+        beforeParse: window => {
+
+            window.fetch = async function () {
+                log.info('xhr fetch: ' + arguments[0])
+
+                if (arguments.length >= 1 && arguments[0]) {
+                    if (typeof arguments[0] === 'string' || arguments[0] instanceof URL) {
+                        if (typeof arguments[0] === 'string' && !arguments[0].startsWith('http')) {
+                            arguments[0] = new URL(arguments[0], urlSite).href
+                        }
+                    } else {
+                        if (arguments[0].url) {
+                            if (typeof arguments[0].url === 'string' || arguments[0].url instanceof URL) {
+                                if (typeof arguments[0].url === 'string' && !arguments[0].url.startsWith('http')) {
+                                    arguments[0].url = new URL(arguments[0].url, urlSite).href
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return await fetch.apply(this, arguments)
+            }
+
+            window.TextEncoder = TextEncoder
+            window.TextDecoder = TextDecoder
+
+            window.XMLHttpRequest.prototype._open = window.XMLHttpRequest.prototype.open
+            window.XMLHttpRequest.prototype.open = function () {
+                log.info('xhr: ' + arguments[1])
+
+                if (arguments.length >= 2 && arguments[1] && typeof arguments[1] === 'string' && !arguments[1].startsWith('http')) {
+                    arguments[1] = new URL(arguments[1], urlSite).href
+                }
+
+                return this._open.apply(this, arguments)
+            }
+
+            window.requestIdleCallback = function (callback, options) {
+                return window.setTimeout(callback, options ? options.timeout : 1000)
+            }
+
+            window.cancelIdleCallback = function (handler) {
+                window.clearTimeout(handler)
+            }
+
+            window.performance = {}
+            window.performance.getEntriesByName = () => ({length: 0})
+            window.performance.getEntries = () => ({length: 0})
+            window.performance.getEntriesByType = () => ({length: 0})
+        },
+        resources: new CssResourceLoader({
+            strictSSL: false,
+            url
+        })
     })
 
     await new Promise(resolve => {
         dom.window.addEventListener('load', e => {
-            log.info('loaded: ' + url)
-            resolve()
+            
+            const handler = setInterval(checker, 500)
+            
+            function checker() {
+                const list = dom.window.document.querySelectorAll('a.ui_social_avatar > img')
+                
+                for (const node of list) {
+                    if (!node.getAttribute('src')) {
+                        return
+                    }
+                }
+
+                clearInterval(handler)
+
+                log.info('page loaded: ' + url)
+                resolve()
+            }
+            
         })
     })
 
