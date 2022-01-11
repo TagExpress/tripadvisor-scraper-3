@@ -361,6 +361,10 @@ function selectObject(doc, selector) {
     const item = doc.querySelector(selector.selector)
     const value = {}
     
+    if (!item) {
+        return null
+    }
+
     for (const field in selector.config) {
         const config = selector.config[field]
         const element = config.select(item, config.selector)
@@ -371,7 +375,7 @@ function selectObject(doc, selector) {
             log.warning('field not found in document: ' + field)
         }
     }
-
+    
     return value
 }
 
