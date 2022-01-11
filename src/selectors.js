@@ -242,7 +242,7 @@ const config = {
                             selector: '.fKqeL',
                             value: element => {
                                 const value = element.textContent
-                                const regexName = /, (.+) do estabelecimento/ig
+                                const regexName = /,\s+(.+)\s+do\s+estabelecimento/ig
                                 const matchName = regexName.exec(value)
                                 return matchName && matchName[1] ? matchName[1] : null
                             }
@@ -251,7 +251,7 @@ const config = {
                             selector: '.fKqeL',
                             value: element => {
                                 const value = element.textContent
-                                const regexName = /Resposta de (.+) ,/ig
+                                const regexName = /Resposta\s+de\s+(.+)\s+,/ig
                                 const matchName = regexName.exec(value)
                                 return matchName && matchName[1] ? matchName[1] : null
                             }
