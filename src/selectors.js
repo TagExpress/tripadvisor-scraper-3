@@ -272,7 +272,7 @@ const config = {
                                     rating: {
                                         selector: '.ui_bubble_rating',
                                         value: ratingValue,
-                                        convert: value => value ? Number(value)/10 : null
+                                        convert: value => value ? Number(value) : null
                                     },
                                     ratingLabel: {
                                         selector: 'span',
