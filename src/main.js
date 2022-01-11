@@ -216,15 +216,15 @@ async function loadPage(url) {
             const handler = setInterval(checker, 500)
             
             function checker() {
-                const list = dom.window.document.querySelectorAll('a.ui_social_avatar > img')
+                const langPt = dom.window.document.querySelector('#LanguageFilter_1')
                 
-                for (const node of list) {
-                    if (!node.getAttribute('src')) {
-                        return
-                    }
+                if (!langPt) {
+                    return
                 }
 
                 clearInterval(handler)
+
+                langPt.click()
 
                 log.info('page loaded: ' + url)
                 resolve()
