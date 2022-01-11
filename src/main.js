@@ -1,6 +1,5 @@
 const fs = require('fs')
 const Apify = require('apify')
-const axios = require('axios')
 const selectors = require('./selectors')
 const jsdom = require('jsdom')
 const JSDOM = jsdom.JSDOM
