@@ -201,7 +201,7 @@ const config = {
                                 if (value) {
                                     const monthList = Object.keys(monthByName).join('|')
                                     
-                                    const regexDate = new RegExp(`(${monthList})\.?\\s+\\w+\\s+(\\d+)$`, 'g')
+                                    const regexDate = new RegExp(`(${monthList})\\.?\\s+\\w+\\s+(\\d+)$`, 'g')
                                     const matchDate = regexDate.exec(value)
                                     if (matchDate && matchDate[1] && matchDate[2]) {
                                         const mes = matchDate[1]
@@ -214,7 +214,7 @@ const config = {
                                     }
                 
                                     const currentYear = new Date().getFullYear().toString()
-                                    const regexDate2 = new RegExp(`(\\d+)\\s+\\w+\\s+(${monthList})\.?$`, 'g')
+                                    const regexDate2 = new RegExp(`(\\d+)\\s+\\w+\\s+(${monthList})\\.?$`, 'g')
                                     const matchDate2 = regexDate2.exec(value)
                                     if (matchDate2 && matchDate2[1] && matchDate2[2]) {
                                         const dia = matchDate2[1]
