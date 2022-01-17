@@ -11,8 +11,7 @@ COPY package*.json ./
 # Install NPM packages, skip optional and development dependencies to
 # keep the image small. Avoid logging too much and print the dependency
 # tree for debugging
-RUN npm --quiet set progress=false \
- && npm install --only=prod --no-optional \
+RUN npm install --only=prod --no-optional \
  && echo "Installed NPM packages:" \
  && (npm list || true) \
  && echo "Node.js version:" \

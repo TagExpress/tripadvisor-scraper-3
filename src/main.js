@@ -144,8 +144,7 @@ async function loadPage(url) {
         referrer: url,
         contentType: "text/html",
         includeNodeLocations: true,
-        storageQuota: 10000000,
-        runScripts: 'dangerously'
+        storageQuota: 10000000
     })
 
     await new Promise(resolve => {
